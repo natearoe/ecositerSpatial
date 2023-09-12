@@ -3,6 +3,8 @@
 #' @param species
 #'
 #' @return an interactive map of species
+#' @importFrom soilDB fetchVegdata
+#' @importFrom RColorBrewer brewer.pal
 #' @export
 #'
 #' @examples
@@ -15,8 +17,8 @@ mapping_species <- function(static_location, species){
   veg_data <- soilDB::fetchVegdata(dsn = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite", SS = FALSE)
 
   species_df <- veg_data$vegplotspecies |>
-    dplyr::filter(plantsciname %in% stringr::str_subset(veg_data$vegplotspecies$plantsciname, paste(species, sep = "|")))
-  |> dplyr::select(vegplotid, plantsciname)
+    dplyr::filter(plantsciname %in% stringr::str_subset(veg_data$vegplotspecies$plantsciname, paste(species, sep = "|"))) |>
+    dplyr::select(vegplotid, plantsciname)
 
   species_location <-
     veg_data$vegplotlocation |> dplyr::filter(vegplot_id %in% species_df$vegplotid) |>
