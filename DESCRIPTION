@@ -5,9 +5,7 @@ Version: 0.1.0
 Authors@R: c(person(given="Nathan", family="Roe", role = c("aut", "cre"), email = "nateroe@gmail.com"))
 Author: Nathan Roe [aut, cre]
 Maintainer: Nathan Roe <nateroe@gmail.com>
-Description: A collection of spatial functions for Natural Resource Conservation Service (NRCS) ecologists. ecositerSpatial is oriented towards
-spatial analysis, and therefore has a different suite of package dependencies. The packages are separate from one another to keep each package
-simpler and lighterweight. 
+Description: test
 RoxygenNote: 7.2.3
 Encoding: UTF-8
 Suggests: knitr, rmarkdown, testthat, plotly, plyr, vegan
@@ -23,3 +21,5 @@ Imports:
     dplyr,
     stringr,
     ggplot2,
+    sf,
+    mapview
