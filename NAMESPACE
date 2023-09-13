@@ -2,4 +2,3 @@
 
 export(mapping_species)
 importFrom(RColorBrewer,brewer.pal)
-importFrom(soilDB,fetchVegdata)
