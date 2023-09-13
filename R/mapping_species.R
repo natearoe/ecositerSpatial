@@ -3,7 +3,6 @@
 #' @param species
 #'
 #' @return an interactive map of species
-#' @importFrom soilDB fetchVegdata
 #' @importFrom RColorBrewer brewer.pal
 #' @export
 #'
