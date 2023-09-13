@@ -4,7 +4,7 @@
 \alias{mapping_species}
 \title{Mapping species}
 \usage{
-mapping_species(static_location, species)
+mapping_species(veg_df, species)
 }
 \arguments{
 \item{species}{}
