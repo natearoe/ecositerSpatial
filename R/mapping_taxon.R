@@ -9,6 +9,8 @@
 #' @examples
 #'#leave blank for now
 #'
+#'
+#'TO DO: make a function that predicts the species for genus level obs.
 mapping_taxon <- function(veg_df, taxon){
 
   taxon_location <- veg_df |> dplyr::filter(plantsciname %in%
@@ -20,7 +22,7 @@ mapping_taxon <- function(veg_df, taxon){
 
   taxon_location_split <-  split(taxon_location, taxon_location$plantsciname)
 
-  my_colors <- RColorBrewer::brewer.pal(n = length(taxon_location_split), name = 'Set1')
+  my_colors <- RColorBrewer::brewer.pal(n = length(taxon_location_split), name = 'Set1')[1:length(taxon_location_split)]
 
   mapview::mapView(taxon_location_split, col.regions = my_colors, verbose = TRUE)
 
