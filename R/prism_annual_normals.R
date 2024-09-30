@@ -45,8 +45,8 @@ prism_annual_normals <- function(ecosite, prism_dir){
                   "Degrees Celsius",
                   "Degrees Celsius",
                   "Degrees Celsius",
-                  "hPa (hectopascals)",
-                  "hPa (hectopascals)")
+                  "hPa - hectopascals)",
+                  "hPa - hectopascals)")
 
 
 
@@ -103,7 +103,7 @@ prism_annual_normals <- function(ecosite, prism_dir){
       dplyr::mutate(weight = ha * comp_pct * 0.01) |>
       dplyr::ungroup() |>
       dplyr::reframe(!!dplyr::sym(paste0(clim_desc[x], " (",
-                                        clim_units[x]), ")") := Hmisc::wtd.quantile(mean, weights = weight,
+                                        clim_units[x], ")")) := Hmisc::wtd.quantile(mean, weights = weight,
                                                                                probs = my_probs)) |> t() |>
       as.data.frame() |> dplyr::rename_with(~ probs_names)
 
