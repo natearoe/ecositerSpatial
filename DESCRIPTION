@@ -22,4 +22,8 @@ Imports:
     stringr,
     ggplot2,
     sf,
-    mapview
+    mapview,
+    terra,
+    prism,
+    soilDB,
+    

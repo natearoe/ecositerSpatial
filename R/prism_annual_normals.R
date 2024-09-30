@@ -11,7 +11,7 @@
 prism_annual_normals <- function(ecosite, prism_dir){
   # set directory where prism data is/will be located
   my_prism_dir <- prism_dir # used in multiple locations, so this is master assignment
-  prism_set_dl_dir(path = prism_dir)
+  prism::prism_set_dl_dir(path = prism_dir)
 
   # define ecosite of interest
   my_ecosite <- ecosite # master assignment
@@ -62,9 +62,9 @@ prism_annual_normals <- function(ecosite, prism_dir){
   # download prism data
   for(i in clim_vars){
     full_p <- file.path(my_prism_dir, i)
-    dir.create(full_p)
-    prism_set_dl_dir(full_p)
-    get_prism_normals(type = i,
+    dir.create(full_p, showWarnings = FALSE)
+    prism::prism_set_dl_dir(full_p)
+    prism::get_prism_normals(type = i,
                       resolution = "800m",
                       annual = TRUE)
   }
@@ -102,8 +102,8 @@ prism_annual_normals <- function(ecosite, prism_dir){
       dplyr::left_join(comp_pct) |>
       dplyr::mutate(weight = ha * comp_pct * 0.01) |>
       dplyr::ungroup() |>
-      dplyr::reframe(!!dplyr::sym(paste(clim_desc[x],
-                                        clim_units[x])) := Hmisc::wtd.quantile(mean, weights = weight,
+      dplyr::reframe(!!dplyr::sym(paste0(clim_desc[x], " (",
+                                        clim_units[x]), ")") := Hmisc::wtd.quantile(mean, weights = weight,
                                                                                probs = my_probs)) |> t() |>
       as.data.frame() |> dplyr::rename_with(~ probs_names)
 
