@@ -18,4 +18,6 @@ Mapping taxon
 \examples{
 #leave blank for now
 
+
+TO DO: make a function that predicts the species for genus level obs.
 }

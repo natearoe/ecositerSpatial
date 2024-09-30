@@ -6,7 +6,7 @@ Authors@R: c(person(given="Nathan", family="Roe", role = c("aut", "cre"), email 
 Author: Nathan Roe [aut, cre]
 Maintainer: Nathan Roe <nateroe@gmail.com>
 Description: test
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Suggests: knitr, rmarkdown, testthat, plotly, plyr, vegan
 Roxygen: list(markdown = TRUE)
