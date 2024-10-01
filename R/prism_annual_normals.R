@@ -83,14 +83,6 @@ prism_annual_normals <- function(ecosite, prism_dir){
                          full.names = TRUE,
                          recursive = TRUE,
                          pattern = ".bil$")
-
-  })
-
-  rast_extract <- lapply(seq_along(clim_vars), FUN = function(x){
-    my_bil <- list.files(paste0(my_prism_dir, clim_vars[x]),
-                         full.names = TRUE,
-                         recursive = TRUE,
-                         pattern = ".bil$")
     my_zone <- terra::rast(my_bil) |>
       terra::project(terra::crs(eco_spatial)) |>
       terra::extract(eco_spatial, touches = TRUE)
