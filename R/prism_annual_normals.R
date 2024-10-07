@@ -24,6 +24,7 @@
 #' annual, monthly). If PRISM data is already downloaded in this location, it will not download again.
 #'
 #' @return dataframe of annual 30-year normal PRISM summary stats
+#' @importFrom Hmisc wtd.quantile
 #' @export
 #'
 #' @examples
