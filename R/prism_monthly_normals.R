@@ -1,11 +1,6 @@
 #' PRISM monthly normals for ecosite
 #' @rdname prism_normal_stats
 #'
-#' @param ecosite ecosite id code
-#' @param prism_dir directory to store PRISM data (recommended to use different directories for
-#' annual, monthly, and daily)
-#'
-#' @return dataframe of monthly 30-year normal PRISM summary stats
 #' @export
 #'
 #' @examples
