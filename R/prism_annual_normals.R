@@ -3,24 +3,25 @@
 #' @description These functions provide summary statistics from PRISM normals
 #' for NRCS ecological sites. Normals are 30-year averages. Annual normals provide the average condition
 #' across 30-years. Monthly normals provide the average condition across 30-years,
-#' for the month. Daily normals provide the average condition across 30-years,
-#' for the day.
+#' for the month.
 #'
 #' The extent of the ecological site is gathered using Soil Data Access (SDA).
-#' SDA queries published SSURGO data. Therefore, this methodology only works
-#' for ecological sites that are currently correlated to components in SSURGO.
+#' SDA queries access published SSURGO data. Therefore, this methodology only works
+#' for ecological sites that are currently correlated to components published in SSURGO.
 #' The SDA query pulls all of the mapunit polygons associated with the
 #' ecological site (has a component-ecosite correlation). Each raster cell is a
-#' PRISM normal, according to the function used (annual, monthly, or daily).
+#' PRISM normal, according to the function used (annual, monthly).
 #' Raster cells are extracted using the mapunit polygons. If a fraction of the
 #' cell is within the polygon, that fraction is used in a weighted average.
 #' Additionally, the area of each polygon and the component percentage are used
 #' in a weighted average.
 #'
 #'
+#'
+#'
 #' @param ecosite ecosite id code
 #' @param prism_dir directory to store PRISM data (recommended to use different directories for
-#' annual, monthly, and daily)
+#' annual, monthly). If PRISM data is already downloaded in this location, it will not download again.
 #'
 #' @return dataframe of annual 30-year normal PRISM summary stats
 #' @export
