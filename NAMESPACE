@@ -2,4 +2,5 @@
 
 export(mapping_taxon)
 export(prism_annual_normals)
+export(prism_monthly_normals)
 importFrom(RColorBrewer,brewer.pal)

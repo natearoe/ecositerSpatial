@@ -1,13 +1,32 @@
 #' PRISM annual normals for ecosite
+#' @rdname prism_normal_stats
+#' @description These functions provide summary statistics from PRISM normals
+#' for NRCS ecological sites. Normals are 30-year averages. Annual normals provide the average condition
+#' across 30-years. Monthly normals provide the average condition across 30-years,
+#' for the month. Daily normals provide the average condition across 30-years,
+#' for the day.
+#'
+#' The extent of the ecological site is gathered using Soil Data Access (SDA).
+#' SDA queries published SSURGO data. Therefore, this methodology only works
+#' for ecological sites that are currently correlated to components in SSURGO.
+#' The SDA query pulls all of the mapunit polygons associated with the
+#' ecological site (has a component-ecosite correlation). Each raster cell is a
+#' PRISM normal, according to the function used (annual, monthly, or daily).
+#' Raster cells are extracted using the mapunit polygons. If a fraction of the
+#' cell is within the polygon, that fraction is used in a weighted average.
+#' Additionally, the area of each polygon and the component percentage are used
+#' in a weighted average.
+#'
 #'
 #' @param ecosite ecosite id code
-#' @param prism_dir directory to store PRISM data
+#' @param prism_dir directory to store PRISM data (recommended to use different directories for
+#' annual, monthly, and daily)
 #'
-#' @return dataframe of summary stats
+#' @return dataframe of annual 30-year normal PRISM summary stats
 #' @export
 #'
 #' @examples
-#' ecositerSpatial::prism_normals(ecosite = "F022AB100CA", prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/")
+#' ecositerSpatial::prism_annual_normals(ecosite = "F022AB100CA", prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual")
 prism_annual_normals <- function(ecosite, prism_dir){
   # set directory where prism data is/will be located
   my_prism_dir <- prism_dir # used in multiple locations, so this is master assignment
@@ -79,15 +98,18 @@ prism_annual_normals <- function(ecosite, prism_dir){
   probs_names <- c("min.", "5%", "20%", "80%", "95%", "max.")
 
   rast_extract <- lapply(seq_along(clim_vars), FUN = function(x){
-    my_bil <- list.files(paste0(my_prism_dir, clim_vars[x]),
+    my_bil <- list.files(paste0(my_prism_dir, "/", clim_vars[x]),
                          full.names = TRUE,
                          recursive = TRUE,
                          pattern = ".bil$")
     my_zone <- terra::rast(my_bil) |>
       terra::project(terra::crs(eco_spatial)) |>
-      terra::extract(eco_spatial, touches = TRUE)
+      terra::extract(eco_spatial, touches = TRUE, exact = TRUE)
+    my_col <- colnames(my_zone)[2]
     my_zone |> dplyr::group_by(ID) |>
-      dplyr::summarise(mean := mean(!!dplyr::sym(value_names[x]))) |>
+      dplyr::summarise(mean := weighted.mean(x = .data[[my_col]],
+                                             w = fraction,
+                                             na.rm = TRUE)) |>
       dplyr::left_join(as.data.frame(eco_spatial) |>
                          dplyr::select(ID, mukey, ha) |>
                          unique()) |>
@@ -101,5 +123,5 @@ prism_annual_normals <- function(ecosite, prism_dir){
 
   })
 
-  dplyr::bind_rows(rast_extract)
+  dplyr::bind_rows(rast_extract) * 0.0394
 }
