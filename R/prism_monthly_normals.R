@@ -99,7 +99,8 @@ prism_monthly_normals <- function(ecosite, prism_dir){
         FUN = function(y) {
           my_zone <- terra::rast(my_bil[y]) |>
             terra::project(terra::crs(eco_spatial)) |>
-            terra::extract(eco_spatial, touches = TRUE)
+            terra::extract(eco_spatial, touches = TRUE,
+                           exact = TRUE)
           my_col <- colnames(my_zone)[2]
           my_zone |> dplyr::group_by(ID) |>
             dplyr::summarise(mean := weighted.mean(x = .data[[my_col]],
