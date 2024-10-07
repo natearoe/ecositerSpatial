@@ -125,5 +125,5 @@ prism_annual_normals <- function(ecosite, prism_dir){
 
   })
 
-  dplyr::bind_rows(rast_extract) * 0.0394
+  dplyr::bind_rows(rast_extract)
 }
