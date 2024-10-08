@@ -84,6 +84,8 @@ prism_monthly_normals <- function(ecosite, prism_dir){
   my_probs <-  c(0, 0.05, .2, .8, .95, 1)
   probs_names <- c("min.", "5%", "20%", "80%", "95%", "max.")
 
+  pb <- txtProgressBar(min = 0, max = length(clim_vars),
+                       style = 3)
 
   rast_extract <- lapply(
     seq_along(clim_vars),
@@ -94,7 +96,7 @@ prism_monthly_normals <- function(ecosite, prism_dir){
         recursive = TRUE,
         pattern = ".bil$"
       )
-      lapply(
+      my_results <- lapply(
         seq_along(my_bil),
         FUN = function(y) {
           my_zone <- terra::rast(my_bil[y]) |>
@@ -102,25 +104,32 @@ prism_monthly_normals <- function(ecosite, prism_dir){
             terra::extract(eco_spatial, touches = TRUE,
                            exact = TRUE)
           my_col <- colnames(my_zone)[2]
-          my_zone |> dplyr::group_by(ID) |>
+          my_restuls <- my_zone |> dplyr::group_by(ID) |>
             dplyr::summarise(mean := weighted.mean(x = .data[[my_col]],
                                                    w = fraction,
                                                    na.rm = TRUE)) |>
-            dplyr::left_join(as.data.frame(eco_spatial) |>
-                               dplyr::select(ID, mukey, ha) |>
-                               unique()) |>
-            dplyr::left_join(comp_pct) |>
+            dplyr::left_join(
+              as.data.frame(eco_spatial) |>
+                dplyr::select(ID, mukey, ha) |>
+                unique(),
+              by = dplyr::join_by(ID)
+            ) |>
+            dplyr::left_join(comp_pct, by = dplyr::join_by(mukey)) |>
             dplyr::mutate(weight = ha * comp_pct * 0.01) |>
             dplyr::ungroup() |>
             dplyr::reframe(
               !!dplyr::sym(paste(my_months[y])) := Hmisc::wtd.quantile(mean, weights = weight,
                                                                        probs = my_probs)
             ) |> t() |>
-            as.data.frame() |> dplyr::rename_with( ~ probs_names)
+            as.data.frame() |> dplyr::rename_with(~ probs_names)
         }
       )
+      setTxtProgressBar(pb, x)
+      my_results
     }
   )
+
+  close(pb)
 
   rast_extract <- lapply(rast_extract, FUN = function(x){
     dplyr::bind_rows(x) |> t()
@@ -128,8 +137,8 @@ prism_monthly_normals <- function(ecosite, prism_dir){
 
   names(rast_extract) <- clim_vars
 
-
-  rast_extract$ppt |> t()
-
+  lapply(rast_extract, FUN = function(x){
+    x |> t()
+  })
 
 }
