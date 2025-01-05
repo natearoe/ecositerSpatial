@@ -11,6 +11,8 @@ site_prism_annual_normals(site_df, prism_dir, id, x, y, EPSG)
 
 \item{prism_dir}{location of PRISM data (either exists - data will not be downloaded, or non-existing - data will be downloaded)}
 
+\item{id}{id column from site_id. siteiid is recommended if using a veg_df generated with ecositer functions for interoperability downstream}
+
 \item{x}{x coordinate (i.e., easting or longitude) column from site_df}
 
 \item{y}{y coordinate (i.e., norhting or latitude) column from site_df}
