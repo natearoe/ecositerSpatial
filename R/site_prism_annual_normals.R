@@ -6,7 +6,7 @@
 #'
 #' @param site_df a dataframe containing geographic data - for ecositer users, most likely a veg_df which contains eastings/northings.
 #' @param prism_dir location of PRISM data (either exists - data will not be downloaded, or non-existing - data will be downloaded)
-#' @id id column from site_id. siteiid is recommended if using a veg_df generated with ecositer functions for interoperability downstream
+#' @param id id column from site_id. siteiid is recommended if using a veg_df generated with ecositer functions for interoperability downstream
 #' @param x x coordinate (i.e., easting or longitude) column from site_df
 #' @param y y coordinate (i.e., norhting or latitude) column from site_df
 #' @param EPSG the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211
