@@ -15,7 +15,7 @@ site_prism_annual_normals(site_df, prism_dir, id, x, y, EPSG)
 
 \item{x}{x coordinate (i.e., easting or longitude) column from site_df}
 
-\item{y}{y coordinate (i.e., norhting or latitude) column from site_df}
+\item{y}{y coordinate (i.e., northing or latitude) column from site_df}
 
 \item{EPSG}{the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211}
 }
