@@ -4,10 +4,18 @@
 \alias{mapping_taxon}
 \title{Mapping taxon}
 \usage{
-mapping_taxon(veg_df, taxon)
+mapping_taxon(veg_df, taxon, x, y, EPSG)
 }
 \arguments{
-\item{taxon}{}
+\item{veg_df}{vegetation dataframe, likely created using \code{ecositer::create_veg_df()}}
+
+\item{taxon}{taxon of interest}
+
+\item{x}{x coordinate (i.e., easting or longitude) column from site_df}
+
+\item{y}{y coordinate (i.e., northing or latitude) column from site_df}
+
+\item{EPSG}{the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211}
 }
 \value{
 an interactive map of taxon
@@ -16,8 +24,6 @@ an interactive map of taxon
 Mapping taxon
 }
 \examples{
-#leave blank for now
+ecositerSpatial::mapping_taxon(veg_df = my_veg_df, taxon = "Pinus", x = "utmeasting", y = "utmnorthing", EPSG = "EPSG:32611")
 
-
-TO DO: make a function that predicts the species for genus level obs.
 }
