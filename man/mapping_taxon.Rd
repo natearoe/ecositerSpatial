@@ -11,9 +11,9 @@ mapping_taxon(veg_df, taxon, x, y, EPSG)
 
 \item{taxon}{taxon of interest}
 
-\item{x}{x coordinate (i.e., easting or longitude) column from site_df}
+\item{x}{x coordinate (i.e., easting or longitude) column from veg_df}
 
-\item{y}{y coordinate (i.e., northing or latitude) column from site_df}
+\item{y}{y coordinate (i.e., northing or latitude) column from veg_df}
 
 \item{EPSG}{the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211}
 }

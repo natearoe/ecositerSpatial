@@ -1,8 +1,8 @@
 #' Mapping taxon
 #' @param veg_df vegetation dataframe, likely created using `ecositer::create_veg_df()`
 #' @param taxon taxon of interest
-#' @param x x coordinate (i.e., easting or longitude) column from site_df
-#' @param y y coordinate (i.e., northing or latitude) column from site_df
+#' @param x x coordinate (i.e., easting or longitude) column from veg_df
+#' @param y y coordinate (i.e., northing or latitude) column from veg_df
 #' @param EPSG the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211
 #'
 #' @return an interactive map of taxon
@@ -14,11 +14,11 @@
 #'
 mapping_taxon <- function(veg_df, taxon, x, y, EPSG){
 
-  if(!x %in% colnames(site_df)){
+  if(!x %in% colnames(veg_df)){
     stop("x is not a column in dataframe")
   }
 
-  if(!y %in% colnames(site_df)){
+  if(!y %in% colnames(veg_df)){
     stop("y is not a column in dataframe")
   }
 
