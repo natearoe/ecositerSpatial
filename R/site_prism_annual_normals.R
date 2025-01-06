@@ -8,7 +8,7 @@
 #' @param prism_dir location of PRISM data (either exists - data will not be downloaded, or non-existing - data will be downloaded)
 #' @param id id column from site_id. siteiid is recommended if using a veg_df generated with ecositer functions for interoperability downstream
 #' @param x x coordinate (i.e., easting or longitude) column from site_df
-#' @param y y coordinate (i.e., norhting or latitude) column from site_df
+#' @param y y coordinate (i.e., northing or latitude) column from site_df
 #' @param EPSG the EPSG code for the coordinate reference system (CRS) of the input data, in format EPSG:36211
 #'
 #' @return dataframe of site
@@ -79,12 +79,14 @@ site_prism_annual_normals <- function(site_df, prism_dir, id, x, y, EPSG){
   # reduce data frame to id and geo columns, only keep unique rows (currently duplicated because of species data)
   site_df <- site_df[, c(id, x, y)] |> unique()
 
+
+
   # create spatvector
   site_vect <- terra::vect(site_df, geom = c(x, y), crs = EPSG) |>
     terra::project("EPSG:6269")
 
-  rast_extract <- lapply(seq_along(clim_vars), FUN = function(x){
-    my_bil <- list.files(paste0(my_prism_dir, "/", clim_vars[x]),
+  rast_extract <- lapply(seq_along(clim_vars), FUN = function(z){
+    my_bil <- list.files(paste0(my_prism_dir, "/", clim_vars[z]),
                          full.names = TRUE,
                          recursive = TRUE,
                          pattern = ".bil$")
